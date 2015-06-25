@@ -12,6 +12,7 @@
 #define kXMPPUserNameKey @"xmppUserName"
 #define kXMPPPasswordKey @"xmppPassword"
 #define kXMPPHostNameKey @"xmppHostName"
+
 static NSString *xmppHostIP = @"192.168.84.112";
 
 #define kNotificationUserLoginState @"NotificationUserLogin"

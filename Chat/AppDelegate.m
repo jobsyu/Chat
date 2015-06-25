@@ -28,7 +28,7 @@
 @interface AppDelegate () <XMPPStreamDelegate>
 {
     CompletionBlock  _completionBlock;    //成功的块代码
-    CompletionBlock _faildBlock;          //失败的块代码
+    CompletionBlock  _faildBlock;          //失败的块代码
 }
 
 /**
@@ -88,8 +88,12 @@
         storyboard = [UIStoryboard storyboardWithName:@"Login" bundle:nil];
     }
     
-    //把Storyboard的初始视图控制器设置为window的rootViewController
-    [self.window setRootViewController:storyboard.instantiateInitialViewController];
+    //self.window = [[UIApplication sharedApplication].windows lastObject];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        //把Storyboard的初始视图控制器设置为window的rootViewController
+        [self.window setRootViewController:storyboard.instantiateInitialViewController];
+    });
+    
 }
 
 
@@ -105,6 +109,10 @@
     [self disConnect];
 }
 
+-(void)applicationDidBecomeActive:(UIApplication *)application
+{
+    //[self connect];
+}
 -(void)dealloc
 {
  
@@ -122,7 +130,7 @@
         // 2. 添加代理
         // 因为所有网络请求都是做基于网络的数据处理，跟界面UI无关，因此可以让代理方法在其他线城中执行
         // 从而提高程序的运行性能
-        [_xmppStream addDelegate:self delegateQueue:dispatch_get_main_queue()];
+        [_xmppStream addDelegate:self delegateQueue:dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)];
     }
 }
 
@@ -169,7 +177,7 @@
     
     // 提示：如果没有指定JID和hostName，才会出错，其他都不出错。
     if (error) {
-        NSLog(@"连接请求发送出错 －%@",error);
+        NSLog(@"连接请求发送出错 －%@",error.localizedDescription);
     } else {
         NSLog(@"连接请求发送成功！");
     }
@@ -223,7 +231,8 @@
 #pragma mark 注册成功
 -(void)xmppStreamDidRegister:(XMPPStream *)sender
 {
-     self.isRegisterUser = NO;
+    WXLog(@"注册成功");
+    self.isRegisterUser = NO;
     
     // 提示：以为紧接着会再次发送验证请求，验证用户登录
     // 而在验证通过后，会执行_completionBlock块代码，
@@ -237,6 +246,7 @@
 #pragma mark 注册失败(用户名已经存在)
 -(void)xmppStream:(XMPPStream *)sender didNotRegister:(DDXMLElement *)error
 {
+    WXLog(@"注册失败");
     self.isRegisterUser = NO;
     if (_faildBlock != nil) {
         _faildBlock();
@@ -246,6 +256,8 @@
 #pragma mark 身份验证通过
 -(void)xmppStreamDidAuthenticate:(XMPPStream *)sender
 {
+    
+    WXLog(@"身份验证通过");
     _isUserLogin = YES;
     
     if (_completionBlock != nil) {
@@ -258,6 +270,7 @@
 #pragma mark 密码错误，身份验证失败
 -(void)xmppStream:(XMPPStream *)sender didNotAuthenticate:(DDXMLElement *)error
 {
+    WXLog(@"身份验证失败");
     if (_faildBlock != nil) {
         _faildBlock();
     }
