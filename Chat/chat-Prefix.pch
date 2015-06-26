@@ -25,6 +25,8 @@
 
 #define WXLog(...) NSLog(@"%s \n %@ \n\n",__func__,[NSString stringWithFormat:__VA_ARGS__])
 
+#define kNotificationUserLoginState @"NotificationUserLogin"
+
 //配置xmpp的日志
 //调试模式下才有需要日志输入功能
 #import "DDLog.h"

@@ -7,6 +7,8 @@
 //
 
 #import "AppDelegate.h"
+#import "LoginUser.h"
+#import "VCardViewController.h"
 
 /**
  *  XMPP的特点，所有的请求都是通过代理的方式实现的。
@@ -29,59 +31,47 @@
 {
     CompletionBlock  _completionBlock;    //成功的块代码
     CompletionBlock  _faildBlock;          //失败的块代码
+    
+    // XMPP重新连接XMPPStream
+    XMPPReconnect *_xmppReconnect;
 }
 
 /**
  *  设置XMPPStream
  */
 -(void)setupStream;
-
+/**
+ *  销毁XMPPStream并注销已注册的扩展模块
+ */
+-(void)teardownStream;
 /**
  *  通知服务器用户上线
  */
 -(void)goOnline;
-
 /**
  *  通知服务器用户下线
  */
 -(void)goOffline;
-
 /**
  *  连接到服务器
  */
 -(void)connect;
-
 /**
  *  与服务器断开连接
  */
 -(void)disConnect;
-
 @end
 
 @implementation AppDelegate
 
-#pragma mark - 通知中心
-#pragma mark 注册通知中心监控用户登录状态
--(void)registerNotification
-{
-    NSNotificationCenter *center  = [NSNotificationCenter defaultCenter];
-    /*
-     参数说明
-     1. 通知中心的监听者
-     2. 发生通知时，调用的选择器方法
-     3. 发生的通知名称
-     4. 传递给选择器方法的对象
-     */
-    [center addObserver:self selector:@selector(loginStateChanged) name:kNotificationUserLoginState object:nil];
 
-}
 
 #pragma mark 用户登录状态变化（登录，注销）
--(void)loginStateChanged
+-(void)showStoryboardWithLogonState:(BOOL)isUserLogon
 {
     UIStoryboard *storyboard = nil;
     
-    if (self.isUserLogin) {
+    if (isUserLogon) {
         //显示Main.storyboard
         storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
     } else {
@@ -96,11 +86,16 @@
     
 }
 
-
-- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+-(BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
+{
+   //1.实例化window
+    self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
     
-    [self registerNotification];
-    // Override point for customization after application launch.
+    self.window.rootViewController = [[VCardViewController alloc] init];
+    
+    //2.设置XMPPStream
+    [self setupStream];
+    
     return YES;
 }
 
@@ -111,11 +106,11 @@
 
 -(void)applicationDidBecomeActive:(UIApplication *)application
 {
-    //[self connect];
+    [self connect];
 }
 -(void)dealloc
 {
- 
+    [self teardownStream];
 }
 
 
@@ -123,17 +118,37 @@
 #pragma mark 设置XMPPStream
 -(void)setupStream
 {
-    //避免_xmppStream被重复实例化
-    if (_xmppStream == nil) {
-        // 1. 实例化XMPPStream
-        _xmppStream = [[XMPPStream alloc] init];
-        // 2. 添加代理
-        // 因为所有网络请求都是做基于网络的数据处理，跟界面UI无关，因此可以让代理方法在其他线城中执行
-        // 从而提高程序的运行性能
-        [_xmppStream addDelegate:self delegateQueue:dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)];
-    }
+    // 0. 方法被调用时，要求_xmppStream必须为nil，否则通过断言提示程序员，并终止程序运行！
+    NSAssert(_xmppStream == nil, @"XMPPStream被多次实例化！");
+    
+    // 1. 实例化XMPPStream
+    _xmppStream = [[XMPPStream alloc] init];
+    // 2. 添加代理
+    // 因为所有网络请求都是做基于网络的数据处理，跟界面UI无关，因此可以让代理方法在其他线城中执行
+    // 从而提高程序的运行性能
+    [_xmppStream addDelegate:self delegateQueue:dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)];
+    
+    // 3. 扩展模块
+    // 3.1 重新连接模块
+    _xmppReconnect = [[XMPPReconnect alloc] init];
+    
+    // 3.2 将重新连接模块添加到XMPPSteam
+    [_xmppReconnect activate:_xmppStream];
 }
 
+// 销毁XMPPStream并注销已注册的扩展模块
+-(void)teardownStream
+{
+    //1.断开XMPPStream的连接
+    [_xmppStream disconnect];
+    
+    // 2. 取消激活在setupStream方法中激活的扩展模块
+    [_xmppReconnect deactivate];
+    
+    // 3.内存清理
+    _xmppStream = nil;
+    _xmppReconnect = nil;
+}
 
 #pragma mark 通知服务器用户上线
 -(void)goOnline
@@ -156,19 +171,22 @@
     [_xmppStream sendElement:presence];
 }
 
-#pragma mark 连接
+#pragma mark 连接服务器
 -(void)connect
 {
-    // 1. 设置XMPPStream
-    [self setupStream];
+    // 1. 如果XMPPStream当前已经连接，直接返回
+    if ([_xmppStream isConnected]) {
+        return;
+    }
     
     // 2. 指定用户名，主机（服务器），连接时不需要password
-    NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    NSString *hostName = [defaults stringForKey:kXMPPHostNameKey];
-    NSString *userName = [NSString stringWithFormat:@"%@@%@",[defaults stringForKey:kXMPPUserNameKey],[defaults stringForKey:kXMPPHostNameKey]];
+    NSString *myjidName = [LoginUser sharedLoginUser].myJIDName;
+    NSString *hostName = [LoginUser sharedLoginUser].hostName;
+    
+    
     
     // 3. 设置XMPPStream的JID和主机
-    [_xmppStream setMyJID:[XMPPJID jidWithString:userName]];
+    [_xmppStream setMyJID:[XMPPJID jidWithString:myjidName]];
     [_xmppStream setHostName:hostName];
     
     // 4. 开始连接
@@ -209,6 +227,15 @@
     [_xmppStream disconnect];
 }
 
+- (void)logout
+{
+    // 1. 通知服务器下线，并断开连接
+    [self disConnect];
+    
+    // 2. 显示用户登录Storyboard
+    [self showStoryboardWithLogonState:NO];
+}
+
 
 #pragma mark - 代理方法
 #pragma mark 连接完成（如果服务器地址不对，就不会调用此方法）
@@ -217,9 +244,9 @@
     NSLog(@"连接建立");
     
     //从系统偏好读取用户密码
-    NSString *password = [[NSUserDefaults standardUserDefaults] stringForKey:kXMPPPasswordKey];
+    NSString *password = [[LoginUser sharedLoginUser] password];
     
-    if (self.isRegisterUser) {
+    if (_isRegisterUser) {
         // 用户注册，发送注册请求
         [_xmppStream  registerWithPassword:password error:nil];
     } else {
@@ -240,7 +267,8 @@
     //    if (_completionBlock != nil) {
     //        _completionBlock();
     //    }
-    [self xmppStreamDidConnect:_xmppStream];
+    //[self xmppStreamDidConnect:_xmppStream];
+    [_xmppStream authenticateWithPassword:[[LoginUser sharedLoginUser] password] error:nil];
 }
 
 #pragma mark 注册失败(用户名已经存在)
@@ -249,8 +277,11 @@
     WXLog(@"注册失败");
     self.isRegisterUser = NO;
     if (_faildBlock != nil) {
-        _faildBlock();
+        dispatch_async(dispatch_get_main_queue(), ^{
+           _faildBlock();
+        });
     }
+    
 }
 
 #pragma mark 身份验证通过
@@ -258,13 +289,17 @@
 {
     
     WXLog(@"身份验证通过");
-    _isUserLogin = YES;
+    //_isUserLogin = YES;
     
     if (_completionBlock != nil) {
-        _completionBlock();
+        dispatch_async(dispatch_get_main_queue(), ^{
+            _completionBlock();
+        });
     }
     // 通知服务器用户上线
     [self goOnline];
+    
+    [self showStoryboardWithLogonState:YES];
 }
 
 #pragma mark 密码错误，身份验证失败
@@ -272,8 +307,12 @@
 {
     WXLog(@"身份验证失败");
     if (_faildBlock != nil) {
-        _faildBlock();
+        dispatch_async(dispatch_get_main_queue(), ^{
+            _faildBlock();
+        });
     }
+    
+    [self showStoryboardWithLogonState:NO];
 }
 
 @end

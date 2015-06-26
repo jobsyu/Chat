@@ -2,6 +2,7 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7531" systemVersion="14C109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="9Of-Z8-z0x">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7520"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
         <!--Login View Controller-->
@@ -17,7 +18,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="RtI-F5-kBJ">
-                                <rect key="frame" x="0.0" y="80" width="320" height="200"/>
+                                <rect key="frame" x="0.0" y="60" width="320" height="170"/>
                                 <subviews>
                                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="请输入用户姓名" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="qzL-LW-NLP" userLabel="请输入用户姓名">
                                         <rect key="frame" x="20" y="20" width="280" height="30"/>
@@ -45,20 +46,18 @@
                                     </textField>
                                     <button opaque="NO" tag="1" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="iSJ-tm-rmU" userLabel="注册">
                                         <rect key="frame" x="20" y="137" width="129" height="30"/>
-                                        <state key="normal" title="注册" backgroundImage="LoginwhiteBtn">
+                                        <state key="normal" title="注册">
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
-                                        <state key="highlighted" backgroundImage="LoginGreenBigBtn_Hl"/>
                                         <connections>
                                             <action selector="userLoginAndRegister:" destination="9Of-Z8-z0x" eventType="touchUpInside" id="bhw-tT-58u"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JKp-1n-zjc" userLabel="登录">
                                         <rect key="frame" x="171" y="137" width="129" height="30"/>
-                                        <state key="normal" title="登录" backgroundImage="LoginGreenBigBtn">
+                                        <state key="normal" title="登录">
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
-                                        <state key="highlighted" backgroundImage="LoginGreenBigBtn_Hl"/>
                                         <connections>
                                             <action selector="userLoginAndRegister:" destination="9Of-Z8-z0x" eventType="touchUpInside" id="EAT-Lb-rd7"/>
                                         </connections>
@@ -67,19 +66,30 @@
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="320" id="FDK-Y0-Sik"/>
-                                    <constraint firstAttribute="height" constant="200" id="qHf-PA-8dU"/>
+                                    <constraint firstAttribute="height" constant="170" id="qHf-PA-8dU"/>
                                 </constraints>
                             </view>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="版权所有 2013-2014, 传智播客" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tVL-5e-KHt">
+                                <rect key="frame" x="16" y="238" width="288" height="15"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstAttribute="centerX" secondItem="RtI-F5-kBJ" secondAttribute="centerX" id="2CK-Fd-uxd"/>
-                            <constraint firstItem="RtI-F5-kBJ" firstAttribute="top" secondItem="JgI-35-gmE" secondAttribute="bottom" constant="60" id="inM-hI-Hrp"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="tVL-5e-KHt" secondAttribute="trailing" id="Ae0-Qa-ALM"/>
+                            <constraint firstItem="tVL-5e-KHt" firstAttribute="leading" secondItem="QIj-ah-GGj" secondAttribute="leadingMargin" id="Lyg-gg-W9J"/>
+                            <constraint firstItem="RtI-F5-kBJ" firstAttribute="top" secondItem="JgI-35-gmE" secondAttribute="bottom" constant="40" id="inM-hI-Hrp"/>
+                            <constraint firstItem="tVL-5e-KHt" firstAttribute="top" secondItem="RtI-F5-kBJ" secondAttribute="bottom" constant="8" id="qvB-do-LxN"/>
                         </constraints>
                     </view>
                     <connections>
                         <outlet property="hostNameText" destination="qIE-R4-Cw7" id="Ha8-Co-LvE"/>
+                        <outlet property="loginButton" destination="JKp-1n-zjc" id="AAQ-bT-Pll"/>
                         <outlet property="passwordText" destination="mkt-Qc-9Vo" id="3pb-85-VWP"/>
+                        <outlet property="registerButton" destination="iSJ-tm-rmU" id="OLT-Jg-CYf"/>
                         <outlet property="userNameText" destination="qzL-LW-NLP" id="PJw-tZ-wb9"/>
                     </connections>
                 </viewController>
@@ -88,11 +98,6 @@
             <point key="canvasLocation" x="-41" y="-170"/>
         </scene>
     </scenes>
-    <resources>
-        <image name="LoginGreenBigBtn" width="11" height="15"/>
-        <image name="LoginGreenBigBtn_Hl" width="11" height="15"/>
-        <image name="LoginwhiteBtn" width="11" height="14"/>
-    </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
         <simulatedOrientationMetrics key="orientation"/>

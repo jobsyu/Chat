@@ -9,14 +9,6 @@
 #import <UIKit/UIKit.h>
 #import "XMPPFramework.h"
 
-#define kXMPPUserNameKey @"xmppUserName"
-#define kXMPPPasswordKey @"xmppPassword"
-#define kXMPPHostNameKey @"xmppHostName"
-
-static NSString *xmppHostIP = @"192.168.84.112";
-
-#define kNotificationUserLoginState @"NotificationUserLogin"
-
 typedef void(^CompletionBlock)();
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
@@ -30,16 +22,11 @@ typedef void(^CompletionBlock)();
  */
 @property (strong,nonatomic,readonly) XMPPStream *xmppStream;
 
-
 /**
  *  是否注册用户标示
  */
 @property (assign,nonatomic) BOOL isRegisterUser;
 
-/**
- *  用户是否登录成功
- */
-@property (assign,nonatomic) BOOL isUserLogin;
 
 /**
  *  连接到服务器
@@ -51,6 +38,10 @@ typedef void(^CompletionBlock)();
  */
 -(void)connectionWithCompletion:(CompletionBlock)completion failed:(CompletionBlock)faild;
 
+/**
+ *  注销用户登录
+ */
+-(void)logout;
 
 @end
 
