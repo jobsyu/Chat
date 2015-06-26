@@ -44,4 +44,3 @@ typedef void(^CompletionBlock)();
 -(void)logout;
 
 @end
-

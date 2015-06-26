@@ -88,7 +88,7 @@
 
 -(BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-   //1.实例化window
+    //1.实例化window
     self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
     
     self.window.rootViewController = [[VCardViewController alloc] init];
@@ -278,7 +278,7 @@
     self.isRegisterUser = NO;
     if (_faildBlock != nil) {
         dispatch_async(dispatch_get_main_queue(), ^{
-           _faildBlock();
+            _faildBlock();
         });
     }
     
