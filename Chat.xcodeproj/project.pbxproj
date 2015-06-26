@@ -149,6 +149,7 @@
 		BC054D2D1B3D33AB002B892C /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BC054D2A1B3D33AB002B892C /* Images.xcassets */; };
 		BC054D2E1B3D33AB002B892C /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = BC054D2B1B3D33AB002B892C /* Info.plist */; };
 		BC054D2F1B3D33AB002B892C /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = BC054D2C1B3D33AB002B892C /* main.m */; };
+		BC054D321B3D4DF8002B892C /* EditVCardViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BC054D311B3D4DF8002B892C /* EditVCardViewController.m */; };
 		BC78A3E21B3A9E9A00561931 /* ChatTests.m in Sources */ = {isa = PBXBuildFile; fileRef = BC78A3E11B3A9E9A00561931 /* ChatTests.m */; };
 		BC78A5AE1B3AB57C00561931 /* libxml2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = BC78A5AD1B3AB57C00561931 /* libxml2.dylib */; };
 		BC78A5B01B3AB6E600561931 /* libresolv.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = BC78A5AF1B3AB6E600561931 /* libresolv.dylib */; };
@@ -452,6 +453,8 @@
 		BC054D2A1B3D33AB002B892C /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		BC054D2B1B3D33AB002B892C /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		BC054D2C1B3D33AB002B892C /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		BC054D301B3D4DF8002B892C /* EditVCardViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditVCardViewController.h; sourceTree = "<group>"; };
+		BC054D311B3D4DF8002B892C /* EditVCardViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EditVCardViewController.m; sourceTree = "<group>"; };
 		BC78A3C21B3A9E9A00561931 /* Chat.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Chat.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BC78A3DB1B3A9E9A00561931 /* ChatTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ChatTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		BC78A3E01B3A9E9A00561931 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -1342,6 +1345,8 @@
 				BC054D151B3D3333002B892C /* Main.storyboard */,
 				BC054D161B3D3333002B892C /* VCardViewController.h */,
 				BC054D171B3D3333002B892C /* VCardViewController.m */,
+				BC054D301B3D4DF8002B892C /* EditVCardViewController.h */,
+				BC054D311B3D4DF8002B892C /* EditVCardViewController.m */,
 			);
 			name = IM;
 			sourceTree = "<group>";
@@ -1636,6 +1641,7 @@
 				BC054C9D1B3D32E4002B892C /* DDLog.m in Sources */,
 				BC054D0A1B3D32E4002B892C /* RFImageToDataTransformer.m in Sources */,
 				BC054CD41B3D32E4002B892C /* XMPPvCardTempAdrTypes.m in Sources */,
+				BC054D321B3D4DF8002B892C /* EditVCardViewController.m in Sources */,
 				BC054C931B3D32E4002B892C /* XMPPPlainAuthentication.m in Sources */,
 				BC054CD21B3D32E4002B892C /* XMPPvCardTemp.m in Sources */,
 				BC054CB91B3D32E4002B892C /* XMPPIQ+JabberRPC.m in Sources */,

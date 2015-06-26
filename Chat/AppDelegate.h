@@ -23,6 +23,14 @@ typedef void(^CompletionBlock)();
 @property (strong,nonatomic,readonly) XMPPStream *xmppStream;
 
 /**
+ *  全局的xmppvCard模块，只读属性
+ */
+@property (strong,nonatomic,readonly) XMPPvCardTempModule *xmppvCardTempModule;
+/**
+ *  全局的xmppvCardAvatar模块，只读属性
+ */
+@property (strong,nonatomic,readonly) XMPPvCardAvatarModule *xmppvCardAvatarModule;
+/**
  *  是否注册用户标示
  */
 @property (assign,nonatomic) BOOL isRegisterUser;

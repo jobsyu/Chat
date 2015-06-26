@@ -91,8 +91,8 @@
     
     //2.将用户信息登录信息写入系统偏好
     [[LoginUser sharedLoginUser] setUserName:userName];
-    [[LoginUser sharedLoginUser] setUserName:password];
-    [[LoginUser sharedLoginUser] setUserName:hostName];
+    [[LoginUser sharedLoginUser] setPassword:password];
+    [[LoginUser sharedLoginUser] setHostName:hostName];
     
     
     //3.让AppDelegate开始连接

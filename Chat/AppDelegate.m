@@ -34,6 +34,7 @@
     
     // XMPP重新连接XMPPStream
     XMPPReconnect *_xmppReconnect;
+    XMPPvCardCoreDataStorage *_xmppvCardStorage; //电子名片的数据存储模块
 }
 
 /**
@@ -64,8 +65,6 @@
 
 @implementation AppDelegate
 
-
-
 #pragma mark 用户登录状态变化（登录，注销）
 -(void)showStoryboardWithLogonState:(BOOL)isUserLogon
 {
@@ -82,6 +81,10 @@
     dispatch_async(dispatch_get_main_queue(), ^{
         //把Storyboard的初始视图控制器设置为window的rootViewController
         [self.window setRootViewController:storyboard.instantiateInitialViewController];
+        
+        if (!self.window.keyWindow) {
+            [self.window makeKeyAndVisible];
+        }
     });
     
 }
@@ -91,7 +94,7 @@
     //1.实例化window
     self.window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
     
-    self.window.rootViewController = [[VCardViewController alloc] init];
+    //self.window.rootViewController = [[VCardViewController alloc] init];
     
     //2.设置XMPPStream
     [self setupStream];
@@ -108,6 +111,7 @@
 {
     [self connect];
 }
+
 -(void)dealloc
 {
     [self teardownStream];
@@ -132,8 +136,14 @@
     // 3.1 重新连接模块
     _xmppReconnect = [[XMPPReconnect alloc] init];
     
+    _xmppvCardStorage =[XMPPvCardCoreDataStorage sharedInstance];
+    _xmppvCardTempModule = [[XMPPvCardTempModule alloc] initWithvCardStorage:_xmppvCardStorage];
+    _xmppvCardAvatarModule = [[XMPPvCardAvatarModule alloc] initWithvCardTempModule:_xmppvCardTempModule];
+    
     // 3.2 将重新连接模块添加到XMPPSteam
     [_xmppReconnect activate:_xmppStream];
+    [_xmppvCardTempModule activate:_xmppStream];
+    [_xmppvCardAvatarModule activate:_xmppStream];
 }
 
 // 销毁XMPPStream并注销已注册的扩展模块
@@ -144,10 +154,15 @@
     
     // 2. 取消激活在setupStream方法中激活的扩展模块
     [_xmppReconnect deactivate];
+    [_xmppvCardTempModule deactivate];
+    [_xmppvCardAvatarModule deactivate];
     
     // 3.内存清理
     _xmppStream = nil;
     _xmppReconnect = nil;
+    _xmppvCardTempModule = nil;
+    _xmppvCardAvatarModule = nil;
+    _xmppvCardStorage = nil;
 }
 
 #pragma mark 通知服务器用户上线
@@ -183,11 +198,16 @@
     NSString *myjidName = [LoginUser sharedLoginUser].myJIDName;
     NSString *hostName = [LoginUser sharedLoginUser].hostName;
     
-    
+    if ([myjidName isEmptyString] || [hostName isEmptyString]) {
+        [self showStoryboardWithLogonState:NO];
+        
+        return;
+    }
     
     // 3. 设置XMPPStream的JID和主机
     [_xmppStream setMyJID:[XMPPJID jidWithString:myjidName]];
     [_xmppStream setHostName:hostName];
+    
     
     // 4. 开始连接
     NSError *error = nil;
