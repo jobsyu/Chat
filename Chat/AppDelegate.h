@@ -9,6 +9,8 @@
 #import <UIKit/UIKit.h>
 #import "XMPPFramework.h"
 
+#define xmppDelegate (AppDelegate *)[[UIApplication sharedApplication] delegate]
+
 typedef void(^CompletionBlock)();
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
@@ -30,6 +32,16 @@ typedef void(^CompletionBlock)();
  *  全局的xmppvCardAvatar模块，只读属性
  */
 @property (strong,nonatomic,readonly) XMPPvCardAvatarModule *xmppvCardAvatarModule;
+
+/**
+ *  全局的xmppRoster模块，只读属性
+ */
+@property (strong,nonatomic,readonly) XMPPRoster *xmppRoster;
+/**
+ *  全局的XMPPRosterCoreDataStorage模块，只读属性
+ */
+@property (strong,nonatomic,readonly) XMPPRosterCoreDataStorage *xmppRosterStorage;
+
 /**
  *  是否注册用户标示
  */

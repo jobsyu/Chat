@@ -27,7 +27,7 @@
 
 // 提示，此处不遵守XMPPStreamDelegate协议，程序仍然能够正常运行
 // 但是如果遵守了协议，可以方便编写代码
-@interface AppDelegate () <XMPPStreamDelegate>
+@interface AppDelegate () <XMPPStreamDelegate,XMPPRosterDelegate>
 {
     CompletionBlock  _completionBlock;    //成功的块代码
     CompletionBlock  _faildBlock;          //失败的块代码
@@ -131,38 +131,58 @@
     // 因为所有网络请求都是做基于网络的数据处理，跟界面UI无关，因此可以让代理方法在其他线城中执行
     // 从而提高程序的运行性能
     [_xmppStream addDelegate:self delegateQueue:dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)];
+    [_xmppRoster addDelegate:self delegateQueue:dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)];
     
     // 3. 扩展模块
     // 3.1 重新连接模块
     _xmppReconnect = [[XMPPReconnect alloc] init];
     
+    
+    //3.2) 电子名片模块
     _xmppvCardStorage =[XMPPvCardCoreDataStorage sharedInstance];
     _xmppvCardTempModule = [[XMPPvCardTempModule alloc] initWithvCardStorage:_xmppvCardStorage];
     _xmppvCardAvatarModule = [[XMPPvCardAvatarModule alloc] initWithvCardTempModule:_xmppvCardTempModule];
+    //3.3)花名册模块
+    _xmppRosterStorage = [[XMPPRosterCoreDataStorage alloc] init];
+    _xmppRoster = [[XMPPRoster alloc] initWithRosterStorage:_xmppRosterStorage];
+    // 设置自动接收好友订阅请求
+    [_xmppRoster setAutoAcceptKnownPresenceSubscriptionRequests:YES];
+    // 自动从服务器更新好友记录，例如：好友自己更改了名片
+    [_xmppRoster setAutoFetchRoster:YES];
+    
+    
     
     // 3.2 将重新连接模块添加到XMPPSteam
     [_xmppReconnect activate:_xmppStream];
     [_xmppvCardTempModule activate:_xmppStream];
     [_xmppvCardAvatarModule activate:_xmppStream];
+    [_xmppRoster activate:_xmppStream];
 }
 
 // 销毁XMPPStream并注销已注册的扩展模块
 -(void)teardownStream
 {
-    //1.断开XMPPStream的连接
+    //1.删除代理
+    [_xmppStream removeDelegate:self];
+    [_xmppRoster removeDelegate:self];
+    
+    //2.断开XMPPStream的连接
     [_xmppStream disconnect];
     
-    // 2. 取消激活在setupStream方法中激活的扩展模块
+    // 3. 取消激活在setupStream方法中激活的扩展模块
     [_xmppReconnect deactivate];
     [_xmppvCardTempModule deactivate];
     [_xmppvCardAvatarModule deactivate];
+    [_xmppRoster deactivate];
     
-    // 3.内存清理
+    // 4.内存清理
     _xmppStream = nil;
     _xmppReconnect = nil;
     _xmppvCardTempModule = nil;
     _xmppvCardAvatarModule = nil;
     _xmppvCardStorage = nil;
+    _xmppRoster = nil;
+    _xmppRosterStorage = nil;
 }
 
 #pragma mark 通知服务器用户上线
@@ -333,6 +353,31 @@
     }
     
     [self showStoryboardWithLogonState:NO];
+}
+
+#pragma mark 用户展现变化
+-(void)xmppStream:(XMPPStream *)sender didReceivePresence:(XMPPPresence *)presence
+{
+    WXLog(@"接收到用户展现数据 － %@",presence);
+    
+    // 1.判断接收到的presence类型是否为subscribe
+    if ([presence.type isEqualToString:@"subscribe"]) {
+        //2.取出presence中的from的jid
+        XMPPJID *from = [presence from];
+        
+        // 3.接收来自from添加好友的订阅请求
+        [_xmppRoster acceptPresenceSubscriptionRequestFrom:from andAddToRoster:YES];
+    }
+}
+
+
+#pragma mark 接收消息
+
+
+#pragma mark - XMPPRoster代理
+-(void)xmppRoster:(XMPPRoster *)sender didReceivePresenceSubscriptionRequest:(XMPPPresence *)presence
+{
+    WXLog(@"接收到其他用户的请求 %@",presence);
 }
 
 @end

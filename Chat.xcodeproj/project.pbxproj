@@ -153,6 +153,8 @@
 		BC78A3E21B3A9E9A00561931 /* ChatTests.m in Sources */ = {isa = PBXBuildFile; fileRef = BC78A3E11B3A9E9A00561931 /* ChatTests.m */; };
 		BC78A5AE1B3AB57C00561931 /* libxml2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = BC78A5AD1B3AB57C00561931 /* libxml2.dylib */; };
 		BC78A5B01B3AB6E600561931 /* libresolv.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = BC78A5AF1B3AB6E600561931 /* libresolv.dylib */; };
+		BCF36BFC1B3E3C4000579788 /* RosterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BCF36BFB1B3E3C4000579788 /* RosterViewController.m */; };
+		BCF36BFF1B3E650500579788 /* AddFriendViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BCF36BFE1B3E650500579788 /* AddFriendViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -461,6 +463,10 @@
 		BC78A3E11B3A9E9A00561931 /* ChatTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ChatTests.m; sourceTree = "<group>"; };
 		BC78A5AD1B3AB57C00561931 /* libxml2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.dylib; path = usr/lib/libxml2.dylib; sourceTree = SDKROOT; };
 		BC78A5AF1B3AB6E600561931 /* libresolv.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libresolv.dylib; path = usr/lib/libresolv.dylib; sourceTree = SDKROOT; };
+		BCF36BFA1B3E3C4000579788 /* RosterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RosterViewController.h; sourceTree = "<group>"; };
+		BCF36BFB1B3E3C4000579788 /* RosterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RosterViewController.m; sourceTree = "<group>"; };
+		BCF36BFD1B3E650500579788 /* AddFriendViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddFriendViewController.h; sourceTree = "<group>"; };
+		BCF36BFE1B3E650500579788 /* AddFriendViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddFriendViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1342,11 +1348,9 @@
 		BC1543411B3B9D23009E3CF9 /* IM */ = {
 			isa = PBXGroup;
 			children = (
+				BCF36BF91B3E3BF000579788 /* Roster */,
 				BC054D151B3D3333002B892C /* Main.storyboard */,
-				BC054D161B3D3333002B892C /* VCardViewController.h */,
-				BC054D171B3D3333002B892C /* VCardViewController.m */,
-				BC054D301B3D4DF8002B892C /* EditVCardViewController.h */,
-				BC054D311B3D4DF8002B892C /* EditVCardViewController.m */,
+				BCF36BF81B3E3BDB00579788 /* VCard */,
 			);
 			name = IM;
 			sourceTree = "<group>";
@@ -1431,6 +1435,28 @@
 				BC78A3E01B3A9E9A00561931 /* Info.plist */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		BCF36BF81B3E3BDB00579788 /* VCard */ = {
+			isa = PBXGroup;
+			children = (
+				BC054D161B3D3333002B892C /* VCardViewController.h */,
+				BC054D171B3D3333002B892C /* VCardViewController.m */,
+				BC054D301B3D4DF8002B892C /* EditVCardViewController.h */,
+				BC054D311B3D4DF8002B892C /* EditVCardViewController.m */,
+			);
+			name = VCard;
+			sourceTree = "<group>";
+		};
+		BCF36BF91B3E3BF000579788 /* Roster */ = {
+			isa = PBXGroup;
+			children = (
+				BCF36BFA1B3E3C4000579788 /* RosterViewController.h */,
+				BCF36BFB1B3E3C4000579788 /* RosterViewController.m */,
+				BCF36BFD1B3E650500579788 /* AddFriendViewController.h */,
+				BCF36BFE1B3E650500579788 /* AddFriendViewController.m */,
+			);
+			name = Roster;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -1549,6 +1575,7 @@
 				BC054CD91B3D32E4002B892C /* XMPPvCardTempTel.m in Sources */,
 				BC054C921B3D32E4002B892C /* XMPPDigestMD5Authentication.m in Sources */,
 				BC054CF71B3D32E4002B892C /* XMPPAutoPing.m in Sources */,
+				BCF36BFF1B3E650500579788 /* AddFriendViewController.m in Sources */,
 				BC054CD61B3D32E4002B892C /* XMPPvCardTempEmail.m in Sources */,
 				BC054CCA1B3D32E4002B892C /* XMPPMessage+XEP0045.m in Sources */,
 				BC054CDA1B3D32E4002B892C /* NSXMLElement+XEP_0059.m in Sources */,
@@ -1664,6 +1691,7 @@
 				BC054CA91B3D32E4002B892C /* XMPPStream.m in Sources */,
 				BC054CAB1B3D32E4002B892C /* XMPPCoreDataStorage.m in Sources */,
 				BC054CC81B3D32E4002B892C /* XMPPRoomMessageMemoryStorageObject.m in Sources */,
+				BCF36BFC1B3E3C4000579788 /* RosterViewController.m in Sources */,
 				BC054CC51B3D32E4002B892C /* XMPPRoomMessageHybridCoreDataStorageObject.m in Sources */,
 				BC054CB41B3D32E4002B892C /* XMPPResourceMemoryStorageObject.m in Sources */,
 				BC054CCD1B3D32E4002B892C /* XMPPvCard.xcdatamodeld in Sources */,
