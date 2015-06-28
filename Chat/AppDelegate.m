@@ -35,6 +35,9 @@
     // XMPP重新连接XMPPStream
     XMPPReconnect *_xmppReconnect;
     XMPPvCardCoreDataStorage *_xmppvCardStorage; //电子名片的数据存储模块
+    
+    XMPPCapabilities    *_xmppCapabilities;  //实体扩展模块
+    XMPPCapabilitiesCoreDataStorage  *_xmppCapabilitiesStorage; //数据存储模块
 }
 
 /**
@@ -127,6 +130,14 @@
     
     // 1. 实例化XMPPStream
     _xmppStream = [[XMPPStream alloc] init];
+    
+    // 让XMPP在真机运行时支持后台，在模拟器上是不支持后台服务运行的
+    #if !TARGET_IPHONE_SIMULATOR
+    {
+        // 允许XMPPStream在真机运行时，支持后台网络通讯！
+        [_xmppStream setEnableBackgroundingOnSocket:YES];
+    }
+    #endif
     // 2. 添加代理
     // 因为所有网络请求都是做基于网络的数据处理，跟界面UI无关，因此可以让代理方法在其他线城中执行
     // 从而提高程序的运行性能
@@ -150,13 +161,22 @@
     // 自动从服务器更新好友记录，例如：好友自己更改了名片
     [_xmppRoster setAutoFetchRoster:YES];
     
+    //3.4)消息模块
+    _xmppMessageArchivingStorage = [[XMPPMessageArchivingCoreDataStorage alloc] init];
+    _xmppMessageArchiving = [[XMPPMessageArchiving alloc] initWithMessageArchivingStorage:_xmppMessageArchivingStorage];
+    
+    //3.5)实体模块
+    _xmppCapabilitiesStorage = [[XMPPCapabilitiesCoreDataStorage alloc] init];
+    _xmppCapabilities = [[XMPPCapabilities alloc] initWithCapabilitiesStorage:_xmppCapabilitiesStorage];
     
     
-    // 3.2 将重新连接模块添加到XMPPSteam
+    // 4 将重新连接模块添加到XMPPSteam
     [_xmppReconnect activate:_xmppStream];
     [_xmppvCardTempModule activate:_xmppStream];
     [_xmppvCardAvatarModule activate:_xmppStream];
     [_xmppRoster activate:_xmppStream];
+    [_xmppMessageArchiving activate:_xmppStream];
+    [_xmppCapabilities activate:_xmppStream];
 }
 
 // 销毁XMPPStream并注销已注册的扩展模块
@@ -174,6 +194,8 @@
     [_xmppvCardTempModule deactivate];
     [_xmppvCardAvatarModule deactivate];
     [_xmppRoster deactivate];
+    [_xmppMessageArchiving deactivate];
+    [_xmppCapabilities deactivate];
     
     // 4.内存清理
     _xmppStream = nil;
@@ -183,6 +205,10 @@
     _xmppvCardStorage = nil;
     _xmppRoster = nil;
     _xmppRosterStorage = nil;
+    _xmppMessageArchiving = nil;
+    _xmppMessageArchivingStorage = nil;
+    _xmppCapabilities = nil;
+    _xmppCapabilitiesStorage = nil;
 }
 
 #pragma mark 通知服务器用户上线
@@ -372,7 +398,10 @@
 
 
 #pragma mark 接收消息
-
+-(void)xmppStream:(XMPPStream *)sender didReceiveMessage:(XMPPMessage *)message
+{
+    WXLog(@"接收到用户消息 －%@",message);
+}
 
 #pragma mark - XMPPRoster代理
 -(void)xmppRoster:(XMPPRoster *)sender didReceivePresenceSubscriptionRequest:(XMPPPresence *)presence

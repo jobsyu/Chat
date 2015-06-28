@@ -73,8 +73,8 @@
 //
 //#import "XMPPTransports.h"
 //
-//#import "XMPPCapabilities.h"
-//#import "XMPPCapabilitiesCoreDataStorage.h"
+#import "XMPPCapabilities.h"
+#import "XMPPCapabilitiesCoreDataStorage.h"
 
 //
 //#import "XMPPMessage+XEP_0184.h"

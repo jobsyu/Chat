@@ -155,6 +155,8 @@
 		BC78A5B01B3AB6E600561931 /* libresolv.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = BC78A5AF1B3AB6E600561931 /* libresolv.dylib */; };
 		BCF36BFC1B3E3C4000579788 /* RosterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BCF36BFB1B3E3C4000579788 /* RosterViewController.m */; };
 		BCF36BFF1B3E650500579788 /* AddFriendViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BCF36BFE1B3E650500579788 /* AddFriendViewController.m */; };
+		BCF36C031B3E88A700579788 /* ChatMessageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BCF36C021B3E88A700579788 /* ChatMessageViewController.m */; };
+		BCF36C061B3E9EA700579788 /* ChatMessageCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BCF36C051B3E9EA700579788 /* ChatMessageCell.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -467,6 +469,10 @@
 		BCF36BFB1B3E3C4000579788 /* RosterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RosterViewController.m; sourceTree = "<group>"; };
 		BCF36BFD1B3E650500579788 /* AddFriendViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddFriendViewController.h; sourceTree = "<group>"; };
 		BCF36BFE1B3E650500579788 /* AddFriendViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddFriendViewController.m; sourceTree = "<group>"; };
+		BCF36C011B3E88A700579788 /* ChatMessageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatMessageViewController.h; sourceTree = "<group>"; };
+		BCF36C021B3E88A700579788 /* ChatMessageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChatMessageViewController.m; sourceTree = "<group>"; };
+		BCF36C041B3E9EA700579788 /* ChatMessageCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatMessageCell.h; sourceTree = "<group>"; };
+		BCF36C051B3E9EA700579788 /* ChatMessageCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChatMessageCell.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1348,8 +1354,9 @@
 		BC1543411B3B9D23009E3CF9 /* IM */ = {
 			isa = PBXGroup;
 			children = (
-				BCF36BF91B3E3BF000579788 /* Roster */,
 				BC054D151B3D3333002B892C /* Main.storyboard */,
+				BCF36C001B3E882200579788 /* Chat */,
+				BCF36BF91B3E3BF000579788 /* Roster */,
 				BCF36BF81B3E3BDB00579788 /* VCard */,
 			);
 			name = IM;
@@ -1457,6 +1464,17 @@
 				BCF36BFE1B3E650500579788 /* AddFriendViewController.m */,
 			);
 			name = Roster;
+			sourceTree = "<group>";
+		};
+		BCF36C001B3E882200579788 /* Chat */ = {
+			isa = PBXGroup;
+			children = (
+				BCF36C011B3E88A700579788 /* ChatMessageViewController.h */,
+				BCF36C021B3E88A700579788 /* ChatMessageViewController.m */,
+				BCF36C041B3E9EA700579788 /* ChatMessageCell.h */,
+				BCF36C051B3E9EA700579788 /* ChatMessageCell.m */,
+			);
+			name = Chat;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -1633,6 +1651,7 @@
 				BC054CD11B3D32E4002B892C /* XMPPvCardTempCoreDataStorageObject.m in Sources */,
 				BC054C9A1B3D32E4002B892C /* DDAbstractDatabaseLogger.m in Sources */,
 				BC054CC31B3D32E4002B892C /* XMPPRoomHybrid.xcdatamodeld in Sources */,
+				BCF36C061B3E9EA700579788 /* ChatMessageCell.m in Sources */,
 				BC054CEF1B3D32E4002B892C /* XMPPMessageArchivingCoreDataStorage.m in Sources */,
 				BC054C9C1B3D32E4002B892C /* DDFileLogger.m in Sources */,
 				BC054CE31B3D32E4002B892C /* XMPPMessage+XEP_0085.m in Sources */,
@@ -1643,6 +1662,7 @@
 				BC054CE01B3D32E4002B892C /* XMPPMessage+XEP_0066.m in Sources */,
 				BC054CB11B3D32E4002B892C /* XMPPRoster.xcdatamodel in Sources */,
 				BC054CBD1B3D32E4002B892C /* XMPPLastActivity.m in Sources */,
+				BCF36C031B3E88A700579788 /* ChatMessageViewController.m in Sources */,
 				BC054CC41B3D32E4002B892C /* XMPPRoomHybridStorage.m in Sources */,
 				BC054CFA1B3D32E4002B892C /* XMPPTime.m in Sources */,
 				BC054CF11B3D32E4002B892C /* XMPPvCardAvatarModule.m in Sources */,

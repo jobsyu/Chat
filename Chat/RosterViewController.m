@@ -9,6 +9,7 @@
 #import "RosterViewController.h"
 #import <CoreData/CoreData.h>
 #import "AppDelegate.h"
+#import "ChatMessageViewController.h"
 
 @interface RosterViewController()<NSFetchedResultsControllerDelegate,UIAlertViewDelegate>
 {
@@ -54,6 +55,28 @@
     if (![_fetchedResultsController performFetch:&error]) {
         NSLog(@"%@",error.localizedDescription);
     };
+}
+
+#pragma mark 跳转
+-(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(NSIndexPath *)indexPath
+{
+    // 判断是否跳往聊天界面
+    if ([segue.identifier isEqualToString:@"ChatSegue"]) {
+        ChatMessageViewController *controller =segue.destinationViewController;
+        
+        // 获取当前选中的用户
+        XMPPUserCoreDataStorageObject *user = [_fetchedResultsController objectAtIndexPath:indexPath];
+        controller.bareJidStr = user.jidStr;
+        controller.bareImage = user.photo;
+        
+        //取出对话方的头像数据
+        NSData *bareData = [[xmppDelegate xmppvCardAvatarModule] photoDataForJID:user.jid];
+        controller.bareImage = [UIImage imageWithData:bareData];
+        
+        NSString *jidStr = [LoginUser sharedLoginUser].myJIDName;
+        NSData *imageData = [[xmppDelegate xmppvCardAvatarModule] photoDataForJID:[XMPPJID jidWithString:jidStr]];
+        controller.myImage = [UIImage imageWithData:imageData];
+    }
 }
 
 #pragma mark NSFetchedResultsControllerDelegate代理方法
@@ -154,6 +177,12 @@
  *  1. 实现tableView:canEditRowAtIndexPath:方法，允许表格边界
  *  2. 实现tableView:commitEditingStyle:forRowAtIndexPath:，提交表格编辑
  */
+#pragma mark - 表格代理方法
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    [self performSegueWithIdentifier:@"ChatSegue" sender:indexPath];
+}
+
 #pragma mark 允许表格编辑
 -(BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
 {

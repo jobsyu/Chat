@@ -43,6 +43,12 @@ typedef void(^CompletionBlock)();
 @property (strong,nonatomic,readonly) XMPPRosterCoreDataStorage *xmppRosterStorage;
 
 /**
+ *  消息存档（归档）模块，只读属性
+ */
+@property (strong,nonatomic,readonly) XMPPMessageArchiving *xmppMessageArchiving;
+@property (strong,nonatomic,readonly) XMPPMessageArchivingCoreDataStorage *xmppMessageArchivingStorage;
+
+/**
  *  是否注册用户标示
  */
 @property (assign,nonatomic) BOOL isRegisterUser;
