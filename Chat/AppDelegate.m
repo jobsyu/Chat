@@ -27,7 +27,7 @@
 
 // 提示，此处不遵守XMPPStreamDelegate协议，程序仍然能够正常运行
 // 但是如果遵守了协议，可以方便编写代码
-@interface AppDelegate () <XMPPStreamDelegate,XMPPRosterDelegate>
+@interface AppDelegate () <XMPPStreamDelegate,XMPPRosterDelegate,TURNSocketDelegate>
 {
     CompletionBlock  _completionBlock;    //成功的块代码
     CompletionBlock  _faildBlock;          //失败的块代码
@@ -399,11 +399,65 @@
     }
 }
 
+#pragma mark 判断IQ是否为SI请求
+-(BOOL)isSIRequest:(XMPPIQ *)iq
+{
+    NSXMLElement *si = [iq elementForName:@"si" xmlns:@"http://jabber.org/protocol/si"];
+    NSString *uuid = [[si attributeForName:@"id"] stringValue];
+    
+    if (si &&uuid) {
+        return YES;
+    }
+    
+    return NO;
+}
+
+#pragma mark 接受请求
+-(BOOL)xmppStream:(XMPPStream *)sender didReceiveIQ:(XMPPIQ *)iq
+{
+    NSLog(@"接受到请求 － %@",iq);
+    
+    //  0.判断IQ是否为SI请求
+    if ([self isSIRequest:iq]) {
+        TURNSocket *socket = [[TURNSocket alloc] initWithStream:_xmppStream toJID:iq.to];
+        
+        [_socketList addObject:socket];
+        
+        [socket startWithDelegate:self delegateQueue:dispatch_get_main_queue()];
+    } else if ([TURNSocket isNewStartTURNRequest:iq]){
+        //1.判断iq的类型是否为新的文件传输请求
+        //1) 实例化socket
+        TURNSocket *socket = [[TURNSocket alloc] initWithStream:sender incomingTURNRequest:iq];
+        
+        //2) 使用一个数组成员记录住所有传输文件使用的socket
+        [_socketList addObject:socket];
+        
+        //3） 添加代理
+        [socket startWithDelegate:self delegateQueue:dispatch_get_main_queue()];
+    }
+    
+    return YES;
+}
 
 #pragma mark 接收消息
 -(void)xmppStream:(XMPPStream *)sender didReceiveMessage:(XMPPMessage *)message
 {
     WXLog(@"接收到用户消息 －%@",message);
+    
+    // 1.针对图像数据单独处理，取出数据
+    NSString *imageStr = [[message elementForName:@"imageData"] stringValue];
+    if (imageStr) {
+        //2.解码成图像
+        NSData *data = [[NSData alloc] initWithBase64EncodedString:imageStr options:NSDataBase64DecodingIgnoreUnknownCharacters];
+        
+        // 3.保存图像
+        UIImage *image = [UIImage imageWithData:data];
+        // 4. 将图像保存到相册
+        // 1) target 通常用self
+        // 2) 保存完图像调用的方法
+        // 3) 上下文信息
+        UIImageWriteToSavedPhotosAlbum(image, nil, nil, nil);
+    }
 }
 
 #pragma mark - XMPPRoster代理
@@ -412,4 +466,25 @@
     WXLog(@"接收到其他用户的请求 %@",presence);
 }
 
+#pragma mark -TURNSocket代理
+-(void)turnSocket:(TURNSocket *)sender didSucceed:(GCDAsyncSocket *)socket
+{
+    WXLog(@"成功");
+    // 保存或者发送文件
+    // 写数据方法，向其他客户端发送文件
+    //    socket writeData:<#(NSData *)#> withTimeout:<#(NSTimeInterval)#> tag:<#(long)#>
+    // 读数据方法，接收来自其他客户端的文件
+    //    socket readDataToData:<#(NSData *)#> withTimeout:<#(NSTimeInterval)#> tag:<#(long)#>
+    //读写操作完成之后断开网络连接
+    [socket  disconnectAfterReadingAndWriting];
+    [_socketList removeAllObjects];
+}
+
+
+-(void)turnSocketDidFail:(TURNSocket *)sender
+{
+    NSLog(@"失败");
+    
+    [_socketList removeObject:sender];
+}
 @end

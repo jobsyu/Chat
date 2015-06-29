@@ -582,13 +582,16 @@
                                                         <constraint firstAttribute="width" constant="60" id="yux-x0-lK6"/>
                                                     </constraints>
                                                 </imageView>
-                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="658-L5-092">
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" lineBreakMode="wordWrap" translatesAutoresizingMaskIntoConstraints="NO" id="658-L5-092">
                                                     <rect key="frame" x="147" y="2" width="77" height="40"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="40" id="7vP-xu-2dc"/>
                                                         <constraint firstAttribute="width" constant="77" id="VYK-vC-AQB"/>
                                                     </constraints>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                    <inset key="contentEdgeInsets" minX="10" minY="10" maxX="15" maxY="15"/>
                                                     <state key="normal" title="Button" backgroundImage="SenderTextNodeBkg">
+                                                        <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                                     </state>
                                                     <state key="highlighted" backgroundImage="SenderTextNodeBkgHL"/>
@@ -622,13 +625,16 @@
                                                         <constraint firstAttribute="width" constant="60" id="vGh-lD-m4B"/>
                                                     </constraints>
                                                 </imageView>
-                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zhV-G9-J3H">
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" lineBreakMode="wordWrap" translatesAutoresizingMaskIntoConstraints="NO" id="zhV-G9-J3H">
                                                     <rect key="frame" x="96" y="2" width="76" height="40"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="76" id="2M5-RS-IGE"/>
                                                         <constraint firstAttribute="height" constant="40" id="35v-bs-BI9"/>
                                                     </constraints>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                    <inset key="contentEdgeInsets" minX="15" minY="10" maxX="10" maxY="15"/>
                                                     <state key="normal" title="Button" backgroundImage="ReceiverTextNodeBkg">
+                                                        <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                                     </state>
                                                     <state key="highlighted" backgroundImage="ReceiverTextNodeBkgHL"/>

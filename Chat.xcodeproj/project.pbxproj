@@ -153,6 +153,7 @@
 		BC78A3E21B3A9E9A00561931 /* ChatTests.m in Sources */ = {isa = PBXBuildFile; fileRef = BC78A3E11B3A9E9A00561931 /* ChatTests.m */; };
 		BC78A5AE1B3AB57C00561931 /* libxml2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = BC78A5AD1B3AB57C00561931 /* libxml2.dylib */; };
 		BC78A5B01B3AB6E600561931 /* libresolv.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = BC78A5AF1B3AB6E600561931 /* libresolv.dylib */; };
+		BCAA3FA21B411B9C00A90771 /* NSString+Extension.m in Sources */ = {isa = PBXBuildFile; fileRef = BCAA3FA11B411B9C00A90771 /* NSString+Extension.m */; };
 		BCC17C9B1B4015F10076663B /* EmoteSelectorView.m in Sources */ = {isa = PBXBuildFile; fileRef = BCC17C9A1B4015F10076663B /* EmoteSelectorView.m */; };
 		BCE5D9A71B400E7F001476EF /* InputTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = BCE5D9A61B400E7F001476EF /* InputTextView.m */; };
 		BCF36BFC1B3E3C4000579788 /* RosterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BCF36BFB1B3E3C4000579788 /* RosterViewController.m */; };
@@ -467,6 +468,8 @@
 		BC78A3E11B3A9E9A00561931 /* ChatTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ChatTests.m; sourceTree = "<group>"; };
 		BC78A5AD1B3AB57C00561931 /* libxml2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.dylib; path = usr/lib/libxml2.dylib; sourceTree = SDKROOT; };
 		BC78A5AF1B3AB6E600561931 /* libresolv.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libresolv.dylib; path = usr/lib/libresolv.dylib; sourceTree = SDKROOT; };
+		BCAA3FA01B411B9C00A90771 /* NSString+Extension.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+Extension.h"; sourceTree = "<group>"; };
+		BCAA3FA11B411B9C00A90771 /* NSString+Extension.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+Extension.m"; sourceTree = "<group>"; };
 		BCC17C991B4015F10076663B /* EmoteSelectorView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EmoteSelectorView.h; sourceTree = "<group>"; };
 		BCC17C9A1B4015F10076663B /* EmoteSelectorView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EmoteSelectorView.m; sourceTree = "<group>"; };
 		BCE5D9A51B400E7F001476EF /* InputTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InputTextView.h; sourceTree = "<group>"; };
@@ -1379,6 +1382,8 @@
 		BC1FD45D1B3AD3A900C66F09 /* Category */ = {
 			isa = PBXGroup;
 			children = (
+				BCAA3FA01B411B9C00A90771 /* NSString+Extension.h */,
+				BCAA3FA11B411B9C00A90771 /* NSString+Extension.m */,
 				BC054D221B3D3370002B892C /* NSArray+Log.h */,
 				BC054D231B3D3370002B892C /* NSArray+Log.m */,
 				BC054D241B3D3370002B892C /* NSString+Helper.h */,
@@ -1668,6 +1673,7 @@
 				BC054C9C1B3D32E4002B892C /* DDFileLogger.m in Sources */,
 				BC054CE31B3D32E4002B892C /* XMPPMessage+XEP_0085.m in Sources */,
 				BC054CCB1B3D32E4002B892C /* XMPPMUC.m in Sources */,
+				BCAA3FA21B411B9C00A90771 /* NSString+Extension.m in Sources */,
 				BC054CB51B3D32E4002B892C /* XMPPRosterMemoryStorage.m in Sources */,
 				BC054CF61B3D32E4002B892C /* XMPPBlocking.m in Sources */,
 				BC054D201B3D3356002B892C /* LoginUser.m in Sources */,

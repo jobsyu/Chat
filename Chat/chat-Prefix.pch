@@ -16,6 +16,7 @@
 #import <UIKit/UIKit.h>
 #import "NSString+Helper.h"
 #import "LoginUser.h"
+#import "NSString+Extension.h"
 
 //#import "UIImage+WX.h"
 //#import "UITextField+WF.h"

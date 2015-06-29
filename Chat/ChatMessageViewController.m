@@ -11,7 +11,7 @@
 #import "AppDelegate.h"
 #import "ChatMessageCell.h"
 
-@interface ChatMessageViewController()<UITextFieldDelegate,NSFetchedResultsControllerDelegate,UITableViewDataSource,UITableViewDelegate>
+@interface ChatMessageViewController()<UITextFieldDelegate,NSFetchedResultsControllerDelegate,UITableViewDataSource,UITableViewDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate>
 {
     NSFetchedResultsController *_fetchedResultsController;
 }
@@ -198,9 +198,8 @@
         cell = [tableView dequeueReusableCellWithIdentifier:ToID];
     }
     
-    // 设置单元格
-    cell.detailTextLabel.text = message.body;
-    
+    [cell setMessage:message isOutgoing:message.isOutgoing];
+
     if (message.isOutgoing) {
         cell.headImageView.image = _myImage;
     } else {
@@ -208,5 +207,71 @@
     }
     
     return cell;
+}
+
+#pragma mark 表格行高
+-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    //提示，在此不能直接调用表格行控件
+    //1. 取出显示行的文本
+    XMPPMessageArchiving_Message_CoreDataObject *message = [_fetchedResultsController objectAtIndexPath:indexPath];
+    NSString *str = message.body;
+    
+    //2. 计算文本的占用空间
+    CGSize size = [str sizeWithFont:[UIFont systemFontOfSize:14]];
+    
+    //3.根据文本空间计算行高
+    if (size.height + 50.0 > 80.0) {
+        return size.height + 50.0;
+    }
+    
+    return 80;
+}
+
+//点击添加照片按钮
+-(IBAction)clickAddPhoto{
+    UIImagePickerController *picker = [[UIImagePickerController alloc] init];
+    picker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+    picker.allowsEditing = YES;
+    picker.delegate = self;
+    
+    [self presentViewController:picker animated:YES completion:nil];
+}
+
+
+#pragma mark 图片选择器代理
+-(void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info{
+    //1.获取选择的图像
+    UIImage *originalImage = info[UIImagePickerControllerEditedImage];
+    //发送图像(同步发送)
+    //[self sendImage:originalImage];
+    //2.关闭照片选择器
+    [self dismissViewControllerAnimated:YES completion:^{
+        // Socket数据传输
+        // 1） 实例化Socket
+        // 强调！！！一定要带上resource【计算机的名称】
+        XMPPJID *toJID = [XMPPJID jidWithString:_bareJidStr resource:@"teacher"];
+        
+        TURNSocket *socket = [[TURNSocket alloc] initWithStream:[xmppDelegate xmppStream] toJID:toJID];
+        
+        [[xmppDelegate socketList] addObject:socket];
+        
+        // 3) 添加代理
+        [socket startWithDelegate:xmppDelegate delegateQueue:dispatch_get_main_queue()];
+    }];
+}
+
+
+#pragma mark 发送图片
+-(void)sendImage:(UIImage *)image
+{
+    XMPPMessage *msg =[XMPPMessage messageWithType:@"chat" to:[XMPPJID jidWithString:_bareJidStr]];
+    [msg addAttributeWithName:@"bodyType" stringValue:@"image"];
+    NSData *data = UIImagePNGRepresentation(image);
+    [msg addBody:@"image"];
+    XMPPElement *attachment = [XMPPElement elementWithName:@"attachment" stringValue:[data base64EncodedStringWithOptions:0]];
+    [msg addChild:attachment];
+    
+    [[xmppDelegate xmppStream] sendElement:msg];
 }
 @end

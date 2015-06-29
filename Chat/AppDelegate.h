@@ -49,10 +49,14 @@ typedef void(^CompletionBlock)();
 @property (strong,nonatomic,readonly) XMPPMessageArchivingCoreDataStorage *xmppMessageArchivingStorage;
 
 /**
+ *  传输文件socket数组
+ */
+@property (strong, nonatomic) NSMutableArray *socketList;
+
+/**
  *  是否注册用户标示
  */
 @property (assign,nonatomic) BOOL isRegisterUser;
-
 
 /**
  *  连接到服务器
