@@ -112,11 +112,14 @@
 
 -(void)applicationDidBecomeActive:(UIApplication *)application
 {
+    // 应用程序被激活后，直接连接，使用系统偏好中的保存的用户记录登录
+    // 从而实现自动登录的效果！
     [self connect];
 }
 
 -(void)dealloc
 {
+    // 释放XMPP相关对象及扩展模块
     [self teardownStream];
 }
 
