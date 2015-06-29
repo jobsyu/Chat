@@ -17,10 +17,10 @@
 }
 
 @property (nonatomic,strong) IBOutlet NSLayoutConstraint *noInputTextConstraint;
-@property (strong,nonatomic) IBOutlet NSLayoutConstraint *englishInputConstraint;
-
 @property (weak,nonatomic) IBOutlet UITableView *tableView;
 
+//点击添加照片按钮
+-(IBAction)clickAddPhoto;
 @end
 
 @implementation ChatMessageViewController
@@ -90,39 +90,40 @@
     
     // 2. 根据rect的orgion.y可以判断键盘是开启还是关闭
     if (rect.origin.y == [UIScreen mainScreen].bounds.size.height) {
-        //关闭键盘
-        NSArray *array = [self.view constraints];
-        if (![array containsObject:_noInputTextConstraint]) {
-            [self.view addConstraint:_noInputTextConstraint];
-        }
-        
-        if (![array containsObject:_englishInputConstraint]) {
-            [self.view addConstraint:_englishInputConstraint];
-        }
+//        //关闭键盘
+//        NSArray *array = [self.view constraints];
+//        if (![array containsObject:_noInputTextConstraint]) {
+//            [self.view addConstraint:_noInputTextConstraint];
+//        }
+//        
+//        if (![array containsObject:_englishInputConstraint]) {
+//            [self.view addConstraint:_englishInputConstraint];
+//        }
+        _noInputTextConstraint.constant = 0.0;
     } else{
         //打开键盘或中英文切换
         //根据目标位置的高度判断键盘类型
-        if (rect.size.height == 216) {
-            // 英文键盘
-            // 删除没有键盘时，输入视图的约束
-            [self.view removeConstraint:_noInputTextConstraint];
-            // 判断英文约束是否存在，如果没有，重新添加
-            NSArray *array = [self.view constraints];
-            if (![array containsObject:_englishInputConstraint]) {
-                [self.view addConstraint:_englishInputConstraint];
-            }
-        } else if (rect.size.height == 252){
-            // 中文键盘
-            // 将两个约束都删除
-            [self.view removeConstraint:_noInputTextConstraint];
-            [self.view removeConstraint:_englishInputConstraint];
-        } else if (rect.size.height == 253){
-            // 中文键盘
-            // 将两个约束都删除
-            [self.view removeConstraint:_noInputTextConstraint];
-            [self.view removeConstraint:_englishInputConstraint];
-        }
-
+//        if (rect.size.height == 216) {
+//            // 英文键盘
+//            // 删除没有键盘时，输入视图的约束
+//            [self.view removeConstraint:_noInputTextConstraint];
+//            // 判断英文约束是否存在，如果没有，重新添加
+//            NSArray *array = [self.view constraints];
+//            if (![array containsObject:_englishInputConstraint]) {
+//                [self.view addConstraint:_englishInputConstraint];
+//            }
+//        } else if (rect.size.height == 252){
+//            // 中文键盘
+//            // 将两个约束都删除
+//            [self.view removeConstraint:_noInputTextConstraint];
+//            [self.view removeConstraint:_englishInputConstraint];
+//        } else if (rect.size.height == 253){
+//            // 中文键盘
+//            // 将两个约束都删除
+//            [self.view removeConstraint:_noInputTextConstraint];
+//            [self.view removeConstraint:_englishInputConstraint];
+//        }
+        _noInputTextConstraint.constant = rect.size.height;
         
     }
     
@@ -198,7 +199,7 @@
     }
     
     // 设置单元格
-    cell.messageTextLabel.text = message.body;
+    cell.detailTextLabel.text = message.body;
     
     if (message.isOutgoing) {
         cell.headImageView.image = _myImage;

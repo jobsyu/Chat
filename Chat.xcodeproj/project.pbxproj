@@ -153,6 +153,8 @@
 		BC78A3E21B3A9E9A00561931 /* ChatTests.m in Sources */ = {isa = PBXBuildFile; fileRef = BC78A3E11B3A9E9A00561931 /* ChatTests.m */; };
 		BC78A5AE1B3AB57C00561931 /* libxml2.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = BC78A5AD1B3AB57C00561931 /* libxml2.dylib */; };
 		BC78A5B01B3AB6E600561931 /* libresolv.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = BC78A5AF1B3AB6E600561931 /* libresolv.dylib */; };
+		BCC17C9B1B4015F10076663B /* EmoteSelectorView.m in Sources */ = {isa = PBXBuildFile; fileRef = BCC17C9A1B4015F10076663B /* EmoteSelectorView.m */; };
+		BCE5D9A71B400E7F001476EF /* InputTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = BCE5D9A61B400E7F001476EF /* InputTextView.m */; };
 		BCF36BFC1B3E3C4000579788 /* RosterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BCF36BFB1B3E3C4000579788 /* RosterViewController.m */; };
 		BCF36BFF1B3E650500579788 /* AddFriendViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BCF36BFE1B3E650500579788 /* AddFriendViewController.m */; };
 		BCF36C031B3E88A700579788 /* ChatMessageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BCF36C021B3E88A700579788 /* ChatMessageViewController.m */; };
@@ -465,6 +467,10 @@
 		BC78A3E11B3A9E9A00561931 /* ChatTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ChatTests.m; sourceTree = "<group>"; };
 		BC78A5AD1B3AB57C00561931 /* libxml2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libxml2.dylib; path = usr/lib/libxml2.dylib; sourceTree = SDKROOT; };
 		BC78A5AF1B3AB6E600561931 /* libresolv.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libresolv.dylib; path = usr/lib/libresolv.dylib; sourceTree = SDKROOT; };
+		BCC17C991B4015F10076663B /* EmoteSelectorView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EmoteSelectorView.h; sourceTree = "<group>"; };
+		BCC17C9A1B4015F10076663B /* EmoteSelectorView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EmoteSelectorView.m; sourceTree = "<group>"; };
+		BCE5D9A51B400E7F001476EF /* InputTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InputTextView.h; sourceTree = "<group>"; };
+		BCE5D9A61B400E7F001476EF /* InputTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InputTextView.m; sourceTree = "<group>"; };
 		BCF36BFA1B3E3C4000579788 /* RosterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RosterViewController.h; sourceTree = "<group>"; };
 		BCF36BFB1B3E3C4000579788 /* RosterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RosterViewController.m; sourceTree = "<group>"; };
 		BCF36BFD1B3E650500579788 /* AddFriendViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddFriendViewController.h; sourceTree = "<group>"; };
@@ -1473,6 +1479,10 @@
 				BCF36C021B3E88A700579788 /* ChatMessageViewController.m */,
 				BCF36C041B3E9EA700579788 /* ChatMessageCell.h */,
 				BCF36C051B3E9EA700579788 /* ChatMessageCell.m */,
+				BCE5D9A51B400E7F001476EF /* InputTextView.h */,
+				BCE5D9A61B400E7F001476EF /* InputTextView.m */,
+				BCC17C991B4015F10076663B /* EmoteSelectorView.h */,
+				BCC17C9A1B4015F10076663B /* EmoteSelectorView.m */,
 			);
 			name = Chat;
 			sourceTree = "<group>";
@@ -1599,6 +1609,7 @@
 				BC054CDA1B3D32E4002B892C /* NSXMLElement+XEP_0059.m in Sources */,
 				BC054C9B1B3D32E4002B892C /* DDASLLogger.m in Sources */,
 				BC054CA01B3D32E4002B892C /* DispatchQueueLogFormatter.m in Sources */,
+				BCC17C9B1B4015F10076663B /* EmoteSelectorView.m in Sources */,
 				BC054CA71B3D32E4002B892C /* XMPPParser.m in Sources */,
 				BC054D101B3D32E4002B892C /* XMPPvCard.xcdatamodeld in Sources */,
 				BC054CEC1B3D32E4002B892C /* XMPPMessageArchiving.xcdatamodeld in Sources */,
@@ -1627,6 +1638,7 @@
 				BC054CD71B3D32E4002B892C /* XMPPvCardTempLabel.m in Sources */,
 				BC054D041B3D32E4002B892C /* DDXMLDocument.m in Sources */,
 				BC054D2F1B3D33AB002B892C /* main.m in Sources */,
+				BCE5D9A71B400E7F001476EF /* InputTextView.m in Sources */,
 				BC054C991B3D32E4002B892C /* GCDAsyncSocket.m in Sources */,
 				BC054CDB1B3D32E4002B892C /* XMPPResultSet.m in Sources */,
 				BC054CA61B3D32E4002B892C /* XMPPModule.m in Sources */,

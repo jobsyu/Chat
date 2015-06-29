@@ -2,6 +2,7 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7531" systemVersion="14C109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="QGM-hp-Rnn">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7520"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
         <!--Tab Bar Controller-->
@@ -488,7 +489,6 @@
         <!--Chat Message View Controller-->
         <scene sceneID="bCW-SV-nET">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="YUh-3F-LOI" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <viewController hidesBottomBarWhenPushed="YES" id="Qxw-9c-gyY" customClass="ChatMessageViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="AbU-fJ-neM"/>
@@ -498,26 +498,71 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="VAT-O8-iS5" userLabel="View - 输入视图">
-                                <rect key="frame" x="0.0" y="524" width="320" height="44"/>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="VAT-O8-iS5" userLabel="View - 输入视图" customClass="InputTextView">
+                                <rect key="frame" x="0.0" y="475" width="320" height="44"/>
                                 <subviews>
                                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="CKv-3A-puS">
-                                        <rect key="frame" x="20" y="7" width="280" height="30"/>
+                                        <rect key="frame" x="45" y="7" width="190" height="30"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits"/>
                                         <connections>
-                                            <outlet property="delegate" destination="Qxw-9c-gyY" id="Hag-Yz-m1k"/>
+                                            <outlet property="delegate" destination="Qxw-9c-gyY" id="xQu-5U-AKg"/>
                                         </connections>
                                     </textField>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hjn-PD-Zo8">
+                                        <rect key="frame" x="5" y="4" width="35" height="35"/>
+                                        <state key="normal" image="ToolViewInputVoice">
+                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <state key="highlighted" image="ToolViewInputVoiceHL"/>
+                                        <connections>
+                                            <action selector="clickVoice:" destination="VAT-O8-iS5" eventType="touchUpInside" id="Ci9-V4-acc"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SZa-oL-5k9">
+                                        <rect key="frame" x="240" y="4" width="35" height="35"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                        <state key="normal" image="ToolViewEmotion">
+                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <state key="highlighted" image="ToolViewEmotionHL"/>
+                                        <connections>
+                                            <action selector="clickEmote:" destination="VAT-O8-iS5" eventType="touchUpInside" id="UAO-bQ-vTP"/>
+                                        </connections>
+                                    </button>
+                                    <button hidden="YES" opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zYc-uk-oRm" userLabel="按住说话">
+                                        <rect key="frame" x="45" y="7" width="190" height="30"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <state key="normal" title="按住说话" backgroundImage="VoiceBtn_Black">
+                                            <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <state key="highlighted" backgroundImage="VoiceBtn_BlackHL"/>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jM9-Lo-dhm">
+                                        <rect key="frame" x="280" y="4" width="35" height="35"/>
+                                        <state key="normal" image="TypeSelectorBtn_Black">
+                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <state key="highlighted" image="TypeSelectorBtnHL_Black"/>
+                                        <connections>
+                                            <action selector="clickAddPhoto" destination="Qxw-9c-gyY" eventType="touchUpInside" id="Kbj-ml-SMV"/>
+                                        </connections>
+                                    </button>
                                 </subviews>
                                 <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="320" id="17b-0f-xog"/>
                                     <constraint firstAttribute="height" constant="44" id="98X-ze-L3F"/>
                                 </constraints>
+                                <connections>
+                                    <outlet property="inputText" destination="CKv-3A-puS" id="QLd-0b-RHD"/>
+                                    <outlet property="recorderButton" destination="zYc-uk-oRm" id="njW-Uc-N3P"/>
+                                    <outlet property="voiceButton" destination="hjn-PD-Zo8" id="jCn-IY-I1l"/>
+                                </connections>
                             </view>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="80" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="eUQ-RD-4Vt">
-                                <rect key="frame" x="0.0" y="20" width="320" height="504"/>
+                                <rect key="frame" x="0.0" y="64" width="320" height="411"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="320" id="Snw-y8-eGL"/>
@@ -530,20 +575,37 @@
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="79"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="YeP-QJ-06O">
-                                                    <rect key="frame" x="240" y="10" width="60" height="60"/>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="YeP-QJ-06O">
+                                                    <rect key="frame" x="232" y="2" width="60" height="60"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="60" id="ksF-pk-Oet"/>
+                                                        <constraint firstAttribute="width" constant="60" id="yux-x0-lK6"/>
+                                                    </constraints>
                                                 </imageView>
-                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="right" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="212" translatesAutoresizingMaskIntoConstraints="NO" id="hYk-9t-YOf">
-                                                    <rect key="frame" x="20" y="10" width="212" height="60"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="658-L5-092">
+                                                    <rect key="frame" x="147" y="2" width="77" height="40"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="40" id="7vP-xu-2dc"/>
+                                                        <constraint firstAttribute="width" constant="77" id="VYK-vC-AQB"/>
+                                                    </constraints>
+                                                    <state key="normal" title="Button" backgroundImage="SenderTextNodeBkg">
+                                                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                                    </state>
+                                                    <state key="highlighted" backgroundImage="SenderTextNodeBkgHL"/>
+                                                </button>
                                             </subviews>
+                                            <constraints>
+                                                <constraint firstItem="YeP-QJ-06O" firstAttribute="leading" secondItem="658-L5-092" secondAttribute="trailing" constant="8" id="9Mc-Z0-xqE"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="YeP-QJ-06O" secondAttribute="trailing" constant="20" id="EGp-sP-gcJ"/>
+                                                <constraint firstItem="YeP-QJ-06O" firstAttribute="top" secondItem="658-L5-092" secondAttribute="top" id="cOz-QI-H4b"/>
+                                                <constraint firstItem="658-L5-092" firstAttribute="top" secondItem="LHD-fn-nkX" secondAttribute="topMargin" constant="-6" id="tFg-YX-qY3"/>
+                                            </constraints>
                                         </tableViewCellContentView>
                                         <connections>
                                             <outlet property="headImageView" destination="YeP-QJ-06O" id="Ihf-uv-HoV"/>
-                                            <outlet property="messageTextLabel" destination="hYk-9t-YOf" id="Nc1-WM-NiG"/>
+                                            <outlet property="messageButton" destination="658-L5-092" id="HbB-ru-kvd"/>
+                                            <outlet property="messageHeightConstraint" destination="7vP-xu-2dc" id="xtA-Ei-3ci"/>
+                                            <outlet property="messageWidthConstraint" destination="VYK-vC-AQB" id="aCx-YY-QcU"/>
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="ChatToCell" rowHeight="80" id="ptk-2a-j1b" customClass="ChatMessageCell">
@@ -553,19 +615,37 @@
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="79"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="hFW-kq-TUT">
-                                                    <rect key="frame" x="20" y="10" width="60" height="60"/>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="hFW-kq-TUT">
+                                                    <rect key="frame" x="28" y="2" width="60" height="60"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="60" id="67E-bj-blV"/>
+                                                        <constraint firstAttribute="width" constant="60" id="vGh-lD-m4B"/>
+                                                    </constraints>
                                                 </imageView>
-                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="212" translatesAutoresizingMaskIntoConstraints="NO" id="mtr-3c-pZt">
-                                                    <rect key="frame" x="88" y="10" width="212" height="60"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zhV-G9-J3H">
+                                                    <rect key="frame" x="96" y="2" width="76" height="40"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="76" id="2M5-RS-IGE"/>
+                                                        <constraint firstAttribute="height" constant="40" id="35v-bs-BI9"/>
+                                                    </constraints>
+                                                    <state key="normal" title="Button" backgroundImage="ReceiverTextNodeBkg">
+                                                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                                    </state>
+                                                    <state key="highlighted" backgroundImage="ReceiverTextNodeBkgHL"/>
+                                                </button>
                                             </subviews>
+                                            <constraints>
+                                                <constraint firstItem="zhV-G9-J3H" firstAttribute="leading" secondItem="hFW-kq-TUT" secondAttribute="trailing" constant="8" id="EVl-Qq-VGc"/>
+                                                <constraint firstItem="hFW-kq-TUT" firstAttribute="leading" secondItem="dpb-29-QdA" secondAttribute="leadingMargin" constant="20" id="JNh-3Y-zuZ"/>
+                                                <constraint firstItem="hFW-kq-TUT" firstAttribute="top" secondItem="dpb-29-QdA" secondAttribute="topMargin" constant="-6" id="PhU-KR-lrD"/>
+                                                <constraint firstItem="hFW-kq-TUT" firstAttribute="top" secondItem="zhV-G9-J3H" secondAttribute="top" id="k0t-3N-vxX"/>
+                                            </constraints>
                                         </tableViewCellContentView>
                                         <connections>
                                             <outlet property="headImageView" destination="hFW-kq-TUT" id="7ZA-Ua-6lz"/>
-                                            <outlet property="messageTextLabel" destination="mtr-3c-pZt" id="gN0-N0-Vcb"/>
+                                            <outlet property="messageButton" destination="zhV-G9-J3H" id="Ze7-yD-YAl"/>
+                                            <outlet property="messageHeightConstraint" destination="35v-bs-BI9" id="0MW-64-S2v"/>
+                                            <outlet property="messageWidthConstraint" destination="2M5-RS-IGE" id="IbV-ho-cg3"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
@@ -581,24 +661,34 @@
                             <constraint firstItem="VAT-O8-iS5" firstAttribute="leading" secondItem="lfr-UW-HK1" secondAttribute="leading" id="bMj-Ds-4Ai"/>
                             <constraint firstItem="eUQ-RD-4Vt" firstAttribute="leading" secondItem="lfr-UW-HK1" secondAttribute="leading" id="eDz-gI-aaM"/>
                             <constraint firstItem="eUQ-RD-4Vt" firstAttribute="top" secondItem="AbU-fJ-neM" secondAttribute="bottom" id="hZK-mv-wuN"/>
-                            <constraint firstItem="dsn-an-4cI" firstAttribute="top" secondItem="VAT-O8-iS5" secondAttribute="bottom" priority="600" constant="216" id="noC-R2-Gwi"/>
                             <constraint firstItem="VAT-O8-iS5" firstAttribute="top" secondItem="eUQ-RD-4Vt" secondAttribute="bottom" id="oHA-eV-zSO"/>
-                            <constraint firstItem="dsn-an-4cI" firstAttribute="top" secondItem="VAT-O8-iS5" secondAttribute="bottom" priority="500" constant="252" id="q24-c0-dpp"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="7h9-Cb-oYW"/>
                     <connections>
-                        <outlet property="englishInputConstraint" destination="noC-R2-Gwi" id="y0o-eW-VNO"/>
                         <outlet property="noInputTextConstraint" destination="Q74-yj-11F" id="sQF-ck-uTG"/>
                         <outlet property="tableView" destination="eUQ-RD-4Vt" id="LrO-Ic-h8O"/>
                     </connections>
                 </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="YUh-3F-LOI" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1052" y="-421"/>
         </scene>
     </scenes>
     <resources>
         <image name="DefaultProfileHead" width="66" height="66"/>
+        <image name="ReceiverTextNodeBkg" width="66" height="54"/>
+        <image name="ReceiverTextNodeBkgHL" width="66" height="54"/>
+        <image name="SenderTextNodeBkg" width="66" height="54"/>
+        <image name="SenderTextNodeBkgHL" width="66" height="54"/>
+        <image name="ToolViewEmotion" width="35" height="35"/>
+        <image name="ToolViewEmotionHL" width="35" height="35"/>
+        <image name="ToolViewInputVoice" width="35" height="35"/>
+        <image name="ToolViewInputVoiceHL" width="35" height="35"/>
+        <image name="TypeSelectorBtnHL_Black" width="35" height="35"/>
+        <image name="TypeSelectorBtn_Black" width="35" height="35"/>
+        <image name="VoiceBtn_Black" width="57" height="40"/>
+        <image name="VoiceBtn_BlackHL" width="57" height="40"/>
         <image name="tabbar_contacts" width="80" height="49"/>
         <image name="tabbar_mainframe" width="80" height="49"/>
         <image name="tabbar_me" width="80" height="49"/>
